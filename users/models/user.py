@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, UserManager
 from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.utils.translation import gettext_lazy as _
+from django.contrib.auth.hashers import make_password
 from django.db import models
 from datetime import datetime
 
@@ -8,7 +9,6 @@ from datetime import datetime
 class MyUserManager(UserManager):
 
     def _create_user(self, username, email, password, **extra_fields):
-
         if not username:
             raise ValueError('The given username must be set')
 
@@ -24,11 +24,17 @@ class MyUserManager(UserManager):
         return user
 
     def create_user(self, username, email, password=None, **extra_fields):
+        """
+        Creates and saves a user with the given username and password.
+        """
         extra_fields.setdefault('is_staff', False)
         extra_fields.setdefault('is_superuser', False)
         return self._create_user(username, email, password, **extra_fields)
 
     def create_superuser(self, username, email, password=None, **extra_fields):
+        """
+        Creates and saves a superuser with the given username and password.
+        """
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
 
@@ -70,6 +76,11 @@ class User(AbstractBaseUser, PermissionsMixin):
         ),
     )
     date_joined = models.DateTimeField(_('date joined'), default=datetime.now)
+
+    def save(self, **kwargs):
+        some_salt = 'mMUj0DrIK6vgtdIYepkIxN' 
+        self.password = make_password(self.password, some_salt)
+        super().save(**kwargs)
     
     USERNAME_FIELD = 'email'
     EMAIL_FIELD = 'email'
