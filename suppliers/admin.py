@@ -1,6 +1,6 @@
 from django.contrib import admin
+from .models import Supplier
+
 
 # Register your models here.
-
-from supplier import Supplier
 admin.site.register(Supplier)
