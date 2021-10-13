@@ -15,6 +15,7 @@ import environ
 
 # enviroment variables settings
 env = environ.Env()
+environ.Env.read_env()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -23,12 +24,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('SECRET_KEY')
+SECRET_KEY = env.str('SECRET_KEY', 'my_secret_key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env.bool('DJANGO_DEBUG', default=False)
+DEBUG = env.bool('DEBUG', default=True)
 
 ALLOWED_HOSTS = tuple(env.list('ALLOWED_HOSTS', default=[]))
+CORS_ALLOW_ALL_ORIGINS = True
 
 
 # Application definition
@@ -85,11 +87,11 @@ WSGI_APPLICATION = 'gomodagoProject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': env.str('POSTGRES_DB'),
-        'USER': env.str('POSTGRES_USER'),
-        'PASSWORD': env.str('POSTGRES_PASSWORD'),
-        'HOST': env.str('DB_HOST'),
-        'PORT': env.int('DB_PORT'),
+        'NAME': env.str('POSTGRES_DB', default="my_db"),
+        'USER': env.str('POSTGRES_USER' , default="my_user"),
+        'PASSWORD': env.str('POSTGRES_PASSWORD', default="my_password"),
+        'HOST': env.str('POSTGRES_HOST', default="my_host"),
+        'PORT': env.int('POSTGRES_PORT', default="my_port"),
     }
 }
 
