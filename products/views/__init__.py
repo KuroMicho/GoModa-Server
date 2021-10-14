@@ -1,0 +1,2 @@
+from products.serializers.productSerializer import ProductSerializer
+from .productCreateView import ProductSerializer
