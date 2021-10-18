@@ -1,1 +1,2 @@
 from .productSerializer import ProductSerializer
+from .productInventorySerializer import ProductInventorySerializer
