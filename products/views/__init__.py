@@ -2,3 +2,4 @@ from products.serializers.productSerializer import ProductSerializer
 from .productCreateView import ProductCreateView
 from .productsRetrieveView import ProductsRetrieveView
 from .productRUDView import ProductRUDView
+from .productsRetrieveOnhandView import ProductsRetrieveOnhandView
