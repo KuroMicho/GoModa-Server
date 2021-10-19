@@ -23,6 +23,9 @@ class PurchaseCreateView(generics.CreateAPIView):
         if serializer.is_valid(raise_exception=True):
             serializer.save()
 
+            if int(request.data["number_purchases"]) <= 0:
+                return Response({"status": "Number not acceptable"}, status=status.HTTP_406_NOT_ACCEPTABLE)
+
             product.inventory_received += int(request.data["number_purchases"])
             product.save()
             
