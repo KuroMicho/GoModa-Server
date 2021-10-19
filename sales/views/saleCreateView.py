@@ -31,6 +31,10 @@ class SaleCreateView(generics.CreateAPIView):
 
             serializer.save()
             sale = Sale.objects.latest("id")
+            
+            if sale.number_shipments <= 0:
+                return Response({"status": "Number not acceptable"}, status=status.HTTP_406_NOT_ACCEPTABLE)
+            
             query.update(inventory_shipped=F("inventory_shipped") + sale.number_shipments)
             query.update(inventory_onhand=F("inventory_onhand") - sale.number_shipments)
 
