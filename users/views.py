@@ -96,15 +96,17 @@ class UserDetail(generics.UpdateAPIView):
 
     permission_classes = (IsAuthenticated, IsAdminUser,)
 
-    def put(self, request, user_id=None, *args, **kwargs):
+    def put(self, request, *args, **kwargs):
         """
             Update user data
         """
-        if user_id:
-            user = User.objects.get(id=user_id)
-            serializer = CustomUserSerializer(user, data=request.data)
-            if serializer.is_valid():
-                serializer.save()
-                return Response({"status": "success", "data": serializer.data}, status=status.HTTP_200_OK)
-            return Response({"status": "error", "error": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
-        return Response({"status": "error", "msg": "user not found"}, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            user = User.objects.get(id=kwargs.get('id'))
+        except Exception as e:
+            return Response({"status": "Not Found"}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = CustomUserSerializer(user, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        
+        return Response({"status": "success", "data": serializer.data}, status=status.HTTP_200_OK)
