@@ -1,12 +1,16 @@
-from django.db.models import F
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import generics, status
 from sales.models.sale import Sale
 from products.models.product import Product
 from sales.serializers import SaleSerializer
+from users.permissions import IsVendorUser
 
 
 class SalesRetrieveView(generics.RetrieveAPIView):
+
+    permission_classes = (IsAuthenticated, IsVendorUser)
+
 
     def get(self, request, *args, **kwargs):
 

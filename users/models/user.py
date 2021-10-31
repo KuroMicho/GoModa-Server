@@ -67,4 +67,4 @@ class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email', 'name', 'last_name']
 
-    is_vendor = models.BooleanField(default=False)
+    is_vendor = models.BooleanField(default=True)

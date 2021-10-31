@@ -1,11 +1,15 @@
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import generics, status
 from purchases.models.purchase import Purchase
 from products.models.product import Product
 from purchases.serializers.purchaseSerializer import PurchaseSerializer
+from users.permissions import IsVendorUser
 
 
 class PurchasesRetrieveView(generics.RetrieveAPIView):
+
+    permission_classes = (IsAuthenticated, IsVendorUser)
 
     def get(self, request, *args, **kwargs):
 

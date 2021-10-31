@@ -1,3 +1,4 @@
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import generics, status
 from products.models.product import Product
@@ -7,6 +8,7 @@ from products.serializers.productSerializer import ProductSerializer
 class ProductRUDView(generics.RetrieveUpdateDestroyAPIView):
 
     serializer_class = ProductSerializer
+    permission_classes = (IsAuthenticated, IsAdminUser)
 
     def get(self, request, *args, **kwargs):
 
