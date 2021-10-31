@@ -21,6 +21,9 @@ class Product(models.Model):
     minimum_required = models.IntegerField(blank=False)
     inventory_onhand = models.IntegerField(blank=True, default=0)
     inventory_shipped = models.IntegerField(blank=True, default=0)
+    date_created = models.DateTimeField(auto_now_add=True)
+    date_updated = models.DateTimeField(auto_now=True)
+
 
     def __str__(self):
         return self.name
