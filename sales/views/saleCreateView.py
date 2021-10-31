@@ -1,14 +1,17 @@
 from django.db.models import F
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import generics, status
 from products.models import Product
 from sales.models.sale import Sale
 from sales.serializers import SaleSerializer
+from users.permissions import IsVendorUser
 
 
 class SaleCreateView(generics.CreateAPIView):
 
     serializer_class = SaleSerializer
+    permission_classes = (IsAuthenticated, IsVendorUser)
 
     def post(self, request, *args, **kwargs):
 
