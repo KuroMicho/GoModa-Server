@@ -31,6 +31,32 @@ SECRET_KEY = env.str('SECRET_KEY', 'my_secret_key')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool('DEBUG', default=True)
 
+
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8080",
+    "http://127.0.0.1:8080",
+    "http://localhost:8000",
+    "http://127.0.0.1:8000"
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:8080",
+    "http://127.0.0.1:8080",
+    "http://localhost:8000",
+    "http://127.0.0.1:8000",
+]
+CORS_ALLOWED_ORIGIN_REGEXES = [
+r"^https://\w+\.localhost\.com$",
+]
+
+CORS_ALLOW_HEADERS = list(default_headers) + ['contenttype']
+
+# For Cookie
+CSRF_COOKIE_HTTPONLY = False
+
+# Hosts
 ALLOWED_HOSTS = tuple(env.list('ALLOWED_HOSTS', default=[]))
 CORS_ALLOW_ALL_ORIGINS = True
 
