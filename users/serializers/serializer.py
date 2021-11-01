@@ -14,7 +14,7 @@ class CustomStorageUserSerializer(serializers.ModelSerializer):
 class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('username', 'name', 'last_name', 'email', 'is_vendor', 'is_staff')
+        fields = ('id', 'username', 'name', 'last_name', 'email', 'is_vendor', 'is_staff')
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
