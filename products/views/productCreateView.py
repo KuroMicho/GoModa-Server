@@ -14,7 +14,7 @@ class ProductCreateView(generics.CreateAPIView):
         serializer = ProductSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response({"status": "success"}, status=status.HTTP_201_CREATED)
+            return Response({"status": "success"}, serializer.data, status=status.HTTP_201_CREATED)
 
         return Response({"status": "error"}, status=status.HTTP_400_BAD_REQUEST)
         
